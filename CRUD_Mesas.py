@@ -37,24 +37,21 @@ def listar_mesas():
     if not todas:
         print("Não há mesas cadastradas.")
         return
-
+    
     mesas_ordenadas = sorted(
-        (m for m in todas if isinstance(m, dict)),
+        (m for m in todas.values() if isinstance(m, dict)),
         key=lambda m: m.get('numero', 0)
     )
 
     print("\n-- Mesas --")
     for m in mesas_ordenadas:
         numero = m.get('numero')
-        status = ""
-        if m.get('status') == "d":
-            status = "Disponivel"     
-        elif m.get('status') == "r":
-            status = "Reservado"  
-        elif m.get('status') == "o":
-            status = "Ocupado"
-        else:
-            status = "Indisponivel"
+        status_code = m.get('status')
+        status = {
+            'd': 'Disponível',
+            'r': 'Reservado',
+            'o': 'Ocupado'
+        }.get(status_code, 'Indisponível')
         print(f"Mesa {numero}: status: {status}")
         
 
